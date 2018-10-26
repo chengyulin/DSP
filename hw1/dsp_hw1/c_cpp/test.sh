@@ -1,1 +1,1 @@
-./train 1 ../model_init.txt ../seq_model_01.txt ../model_01.txt
+./train 50 ../model_init.txt ../seq_model_02.txt ../model_02.txt
