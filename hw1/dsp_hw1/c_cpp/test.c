@@ -8,8 +8,9 @@ double viterbi(const HMM* hmm, const char* seq)
 	double de[MAX_SEQ][MAX_STATE] = {{0.0}};	// delta for viterbi
 	
 	// initialize delta
-	for(int i = 0; i < hmm->state_num; i++)
+	for(int i = 0; i < hmm->state_num; i++){
 		de[0][i] = hmm->initial[i] * hmm->observation[seq[0]-'A'][i];
+	}
 
 	int length = strlen(seq);
 	for(int t = 1; t < length; t++){
@@ -25,10 +26,11 @@ double viterbi(const HMM* hmm, const char* seq)
 	}
 	
 	double maxP = -1.0;
-	for(int i = 0; i < hmm->state_num; i++)
-		if(maxP < de[length-1][i])
+	for(int i = 0; i < hmm->state_num; i++){
+		if(maxP < de[length-1][i]){
 			maxP = de[length-1][i];
-	
+		}
+	}
 	return maxP;
 }
 

@@ -106,7 +106,7 @@ static void dumpHMM( FILE *fp, HMM *hmm )
 static int load_models( const char *listname, HMM *hmm, const int max_num )
 {
    FILE *fp = open_or_die( listname, "r" );
-
+   printf("%s\n",listname );
    int count = 0;
    char filename[MAX_LINE] = "";
    while( fscanf(fp, "%s", filename) == 1 ){

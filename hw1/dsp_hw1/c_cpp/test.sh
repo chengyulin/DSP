@@ -1,1 +1,1 @@
-./train 50 ../model_init.txt ../seq_model_02.txt ../model_02.txt
+./test ../modellist.txt ../testing_data1.txt result.txt

@@ -29,7 +29,7 @@ void forward(const HMM *hmm)
 		}
 
 	}
-	printf("%lf\n",alpha[0][0][0] );
+	//printf("%lf\n",alpha[0][0][0] );
 	return;
 }
 void backward(const HMM *hmm)
@@ -91,7 +91,7 @@ void forward_backward(HMM* hmm){
 		}
     }
     double init[MAX_STATE] = {0.0};
-    printf("cnt %d\n",cnt );
+    // printf("cnt %d\n",cnt );
     for (int ind = 0; ind < cnt; ++ind){
     	 for(int i = 0; i < hmm->state_num; i++)
 			init[i] += ((gam[ind][0][i])/cnt);
@@ -156,7 +156,7 @@ void read_data(const char* seq_model_name)
 		}
 		cnt += 1;
 	}
-	printf("%d %s\n",cnt,data[cnt-1] );
+	// printf("%d %s\n",cnt,data[cnt-1] );
 	fclose(seq_model);
 	return;
 }

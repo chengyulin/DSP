@@ -1,0 +1,1 @@
+./train 500 ../model_init.txt ../seq_model_05.txt ../model_05.txt
