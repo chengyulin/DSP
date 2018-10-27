@@ -5,33 +5,32 @@
 
 double viterbi(const HMM* hmm, const char* seq)
 {
-	double de[MAX_SEQ][MAX_STATE] = {{0.0}};	// delta for viterbi
-	
-	// initialize delta
+	double delta[MAX_SEQ][MAX_STATE] = {{0.0}};	
+
 	for(int i = 0; i < hmm->state_num; i++){
-		de[0][i] = hmm->initial[i] * hmm->observation[seq[0]-'A'][i];
+		delta[0][i] = hmm->initial[i] * hmm->observation[seq[0]-'A'][i];
 	}
 
 	int length = strlen(seq);
 	for(int t = 1; t < length; t++){
 		for(int j = 0; j < hmm->state_num; j++){
-			double max = -1.0;
+			double mx = -1.0;
 			for(int i = 0; i < hmm->state_num; i++){
-				double cur = de[t-1][i] * hmm->transition[i][j];
-				if(max < cur)
-					max = cur;
+				double cur = delta[t-1][i] * hmm->transition[i][j];
+				if(mx < cur)
+					mx = cur;
 			}
-			de[t][j] = max * hmm->observation[seq[t]-'A'][j];
+			delta[t][j] = mx * hmm->observation[seq[t]-'A'][j];
 		}
 	}
 	
-	double maxP = -1.0;
+	double mx = -1.0;
 	for(int i = 0; i < hmm->state_num; i++){
-		if(maxP < de[length-1][i]){
-			maxP = de[length-1][i];
+		if(delta[length-1][i] > mx){
+			mx = delta[length-1][i];
 		}
 	}
-	return maxP;
+	return mx;
 }
 
 int main(int argc, char* argv[])
@@ -45,16 +44,16 @@ int main(int argc, char* argv[])
 	FILE* result = open_or_die(argv[3], "w");
 	
 	while(fscanf(data, "%s", seq) != EOF){
-		int bestM = -1;
-		double maxP = -1.0;
+		int ind = -1;
+		double mx = -1.0;
 		for(int i = 0; i < model_cnt; i++){
 			double curP = viterbi(&models[i], seq);
-			if(maxP < curP){
-				maxP = curP;
-				bestM = i;
+			if(mx < curP){
+				mx = curP;
+				ind = i;
 			}
 		}	
-		fprintf(result, "%s %e\n", models[bestM].model_name, maxP);
+		fprintf(result, "%s\n", models[ind].model_name);
 	}
 
 	fclose(data);
